@@ -22,6 +22,16 @@ const floodupdatesschema=new mongoose.Schema({
         minlength:3,
         maxlength:2000
       }
+    ,
+    
+    SatelliteName:{
+        type:String,
+        required:true,
+        minlength:3,
+        maxlength:2000
+      } 
+    
+    
     ,FloodCSVData:{
         type:[],
         required:true,
@@ -35,6 +45,7 @@ const validateflooddata=(flood) =>{
        myStartDate:yup.string().required().min(10).max(2000),
        myEndDate:yup.string().required().min(10).max(2000),
        myCountryName:yup.string().required().min(3).max(2000),
+       mySatelliteName:yup.string().required().min(3).max(2000),
        
  });
  return schema.validate(flood).then((flood)=>flood).catch((error) =>{

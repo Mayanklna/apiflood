@@ -10,6 +10,7 @@ router.post('/',async (req,res)=>{
     StartDate:req.body.myStartDate,
     EndDate:req.body.myEndDate,
     CountryName:req.body.myCountryName,
+    SatelliteName:req.body.mySatelliteName,
     FloodCSVData:req.body.myFloodCSVData
     });
     flood.save().then((flood)=>{
@@ -41,6 +42,7 @@ router.put("/:floodid",async(req,res)=>{
         StartDate:req.body.myStartDate,
         EndDate:req.body.myEndDate,
         CountryName:req.body.myCountryName,
+        SatelliteName:req.body.mySatelliteName,
         FloodCSVData:req.body.myFloodCSVData
       },{new:true}) 
         if(!updateflood) res.status(404).send("flood not found"); 
