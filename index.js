@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const floodsroutes=require('./routes/flooddata')
 const app=express();
 require('dotenv').config();
- 
+app.use(express.static('website'));
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", '*');
     res.header("Access-Control-Allow-Credentials", true);

@@ -36,10 +36,49 @@ const floodupdatesschema=new mongoose.Schema({
         type:[],
         required:true,
          } 
-   
-   
-
-})
+    ,
+    Floodlistlink1:{
+      type:String,
+        required:true,
+    }
+  ,
+  Floodlistlink2:{
+    type:String,
+      required:true,
+  },
+  Floodlistlink3:{
+    type:String,
+      required:true,
+  },
+  Floodlistlink4:{
+    type:String,
+      required:true,
+  },
+  Floodlistlink5:{
+    type:String,
+      required:true,
+  },
+  Floodlistlink6:{
+    type:String,
+      required:true,
+  },
+  Floodlistlink7:{
+    type:String,
+      required:true,
+  },
+  Floodlistlink8:{
+    type:String,
+      required:true,
+  },
+  Floodlistlink9:{
+    type:String,
+      required:true,
+  },
+   Floodlistlink10:{
+    type:String,
+      required:true,
+  }
+  })
 const validateflooddata=(flood) =>{
     const schema=yup.object().shape({
        myStartDate:yup.string().required().min(10).max(2000),
