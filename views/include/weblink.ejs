@@ -1,0 +1,34 @@
+<form action="/api/flood" method="post" enctype="multipart/form-data" id="add_flood">
+    <div class="new_flood">
+        <div class="form-group"> <label for="name" class="text-light">FloodList Weblink</label>
+            <input type="hidden" name="id" value="">
+            <input type="text" name="floodname" value="" placeholder="http://floodlist.com/"  >
+        </div>
+       
+        <div class="form-group">
+            <label for="start-date" class="text-light">Flood Start Date</label><br>
+            <input type="date" name="StartDate" id="startdate" required>
+        </div>
+        <div class="form-group">
+            <label for="end-date" class="text-light">Flood End Date</label><br>
+            <input type="date" id="enddate" name="EndDate" required>
+        </div>
+        <div class="form-group">
+            <label for="country" class="text-light">Country</label><br>
+
+            <select id="countries" name="CountryName">
+                <option value="India">India</option>
+                <option value="Indonesia">Indonesia</option>
+                <option value="Japan">Japan</option>
+                <option value="Laos">Laos</option>
+                <option value="Thailand">Thailand</option>
+            </select>
+        </div>
+        <br> 
+        <div class="form-group"> 
+                    
+            <button type="submit" class="btn btn-lg btn-primary">Submit</button> </div>
+
+          </div>
+    </div>
+</form>
