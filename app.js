@@ -51,7 +51,7 @@ app.use('/js', express.static(path.resolve(__dirname, "assets/js")))
 
 var temp ;
 
-app.post('/api/flood',uploads.single('csv'), async (req,res)=>{
+app.post('/api/flood',uploads.single('csv'),  (req,res)=>{
     if(!req.body){
         res.status(400).send({ message : "Content can not be emtpy!"});
         return;
