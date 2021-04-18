@@ -71,7 +71,7 @@ csv()
         flooddata : jsonObj
        
     })
-      
+ 
     flood.save(flood).then(data => {
         // res.send(data)
    
