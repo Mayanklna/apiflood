@@ -39,4 +39,8 @@ var csvSchema = new mongoose.Schema({
   
 });
 
-module.exports = mongoose.model('floodrecords',csvSchema);
+ 
+const Flooddb =mongoose.model('floodrecords',csvSchema);
+ 
+
+module.exports =Flooddb

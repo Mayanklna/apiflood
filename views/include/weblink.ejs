@@ -1,13 +1,13 @@
-<form action="/api/flood" method="post" enctype="multipart/form-data" id="add_flood">
+<form action="/api/link" method="POST"   id="add_weblink">
     <div class="new_flood">
-        <div class="form-group"> <label for="name" class="text-light">FloodList Weblink</label>
+        <div class="form-group"> <label for="weblink" class="text-light">FloodList Weblink</label>
             <input type="hidden" name="id" value="">
-            <input type="text" name="floodname" value="" placeholder="http://floodlist.com/"  >
+            <input type="text" name="weblink" value="" placeholder="http://floodlist.com/"  required>
         </div>
        
         <div class="form-group">
             <label for="start-date" class="text-light">Flood Start Date</label><br>
-            <input type="date" name="StartDate" id="startdate" required>
+            <input type="date" name="StartDate" id="StartDate" required>
         </div>
         <div class="form-group">
             <label for="end-date" class="text-light">Flood End Date</label><br>
@@ -23,12 +23,9 @@
                 <option value="Laos">Laos</option>
                 <option value="Thailand">Thailand</option>
             </select>
-        </div>
-        <br> 
-        <div class="form-group"> 
-                    
+              <br>  <br>
             <button type="submit" class="btn btn-lg btn-primary">Submit</button> </div>
-
-          </div>
-    </div>
+        </div>
+      
+    
 </form>

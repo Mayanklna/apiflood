@@ -4,6 +4,11 @@ $("#add_flood").submit(function(event){
  
     alert("Data Inserted Successfully!");
 })
+$("#add_weblink").submit(function(event){
+ 
+    alert("Data Inserted Successfully!");
+})
+
 
 $("#update_flood").submit(function(event){
     event.preventDefault();
@@ -17,7 +22,7 @@ $("#update_flood").submit(function(event){
 
 
     var request = {
-        "url" : `http://localhost:3000/api/flood/${data.id}`,
+        "url" : `https://agile-hollows-34401.herokuapp.com/api/flood/${data.id}`,
         "method" : "PUT",
         "data" : data
     }
@@ -34,7 +39,7 @@ if(window.location.pathname == "/"){
         var id = $(this).attr("data-id")
 
         var request = {
-            "url" : `http://localhost:3000/api/flood/${id}`,
+            "url" : `https://agile-hollows-34401.herokuapp.com/api/flood/${id}`,
             "method" : "DELETE"
         }
 
