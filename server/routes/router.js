@@ -15,17 +15,7 @@ const services = require('../services/render');
  */
 route.get('/', services.homeRoutes);
  
-route.get('/weblinks', async (req, res) => {
  
-    try{ 
-        const links=await weblinkmodel.find({})
-        res.send(links)
-      
-          }
-          catch(e){
-              res.status(500).send(e)
-          }
-});
 /**
  *  @description add flood
  *  @method GET /add-flood

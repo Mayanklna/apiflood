@@ -64,6 +64,18 @@ app.get('/flooddata', async (req, res) => {
               res.status(500).send(e)
           }
 });
+
+app.get('/weblinks', async (req, res) => {
+ 
+    try{ 
+        const links=await weblinkmodel.find({})
+        res.send(links)
+      
+          }
+          catch(e){
+              res.status(500).send(e)
+          }
+});
 app.post('/api/flood',uploads.single('csv'),  (req,res)=>{
     if(!req.body){
         res.status(400).send({ message : "Content can not be emtpy!"});
