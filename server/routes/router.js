@@ -14,17 +14,7 @@ const services = require('../services/render');
  *  @method GET /
  */
 route.get('/', services.homeRoutes);
-route.get('/flooddata', async (req, res) => {
  
-    try{ 
-        const cases=await model.find({})
-        res.send(cases)
-      
-          }
-          catch(e){
-              res.status(500).send(e)
-          }
-});
 route.get('/weblinks', async (req, res) => {
  
     try{ 

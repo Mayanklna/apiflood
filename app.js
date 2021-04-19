@@ -32,15 +32,18 @@ mongoose.connect(process.env.MONGO_URL,{useNewUrlParser:true},{ useUnifiedTopolo
 app.set('view engine','ejs');
 app.use('/', require('./server/routes/router'))
 //fetch data from the request
-app.use(bodyParser.json({limit: '10mb', extended: true}))
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '50mb', extended: true}))
 app.use(function(req, res, next) {
-        res.header("Access-Control-Allow-Origin", '*');
-        res.header("Access-Control-Allow-Credentials", true);
-        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-        res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept');
-        next();
-      }); 
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept');
+    next();
+  }); 
+ 
+app.use(bodyParser.urlencoded({
+  extended: true
+})); 
 //static folder
 app.use(express.static(path.resolve(__dirname,'public')));
 app.use('/css', express.static(path.resolve(__dirname, "assets/css")))
@@ -50,7 +53,17 @@ app.use('/js', express.static(path.resolve(__dirname, "assets/js")))
  
 
 var temp ;
-
+app.get('/flooddata', async (req, res) => {
+ 
+    try{ 
+        const cases=await Flooddb.find({})
+        res.send(cases)
+      
+          }
+          catch(e){
+              res.status(500).send(e)
+          }
+});
 app.post('/api/flood',uploads.single('csv'),  (req,res)=>{
     if(!req.body){
         res.status(400).send({ message : "Content can not be emtpy!"});
