@@ -2,7 +2,7 @@ const express = require('express');
 const route = express.Router()
 const   model = require('../model/model');
 const  weblinkmodel = require('../model/weblinkmodel');
- 
+const  twitmodel = require('../model/twitmodel');
 const services = require('../services/render');
 
 // const controller = require('../controller/controller');
@@ -22,6 +22,7 @@ route.get('/', services.homeRoutes);
  */
 route.get('/add-flood', services.add_flood)
 route.get('/floodlist-weblink', services.add_weblink)
+route.get('/twitter', services.add_twit)
 /**
  *  @description for update flood
  *  @method GET /update-flood
@@ -142,7 +143,61 @@ route.delete('/api/link/:id', (req, res) => {
         });
      
 });
+//tweet
+route.get('/api/twit',(req, res) => {
 
+    if (req.query.id) {
+        const id = req.query.id;
+
+        
+      twitmodel.findById(id)
+            .then(twit => {
+                if (!twit) {
+                    res.status(404).send(errorr)
+                    console.log(errorr);
+                } else {
+                    res.send(twit)
+                }
+            })
+            .catch(errr => {
+                res.status(500).send({ message: "Erro retrieving weblink with id " + id })
+            })
+
+    } else {
+    twitmodel.find()
+            .then(twits=> {
+                res.send(twits)
+            })
+            .catch(err => {
+                res.status(500).send({ message: err.message || "Error Occurred while retriving link information" })
+            })
+     
+    }
+
+
+});
+ 
+route.delete('/api/twit/:id', (req, res) => {
+    const id = req.params.id;
+
+ 
+    twitmodel.findByIdAndDelete(id)
+        .then(twit => {
+            if (!twit) {
+                res.status(404).send({ message: `Cannot Delete with id ${id}. Maybe id is wrong` })
+            } else {
+                res.send({
+                    message: "Twit was deleted successfully!"
+                })
+            }
+        })
+        .catch(errr => {
+            res.status(500).send({
+                message: "Could not delete Twit with id=" + id
+            });
+        });
+     
+});
 
 
 

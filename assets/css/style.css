@@ -150,11 +150,13 @@ table{
     max-width: 786px;
     margin: auto;
 }
+#add_twit.form-group,
 #add_weblink.form-group,
 #update_flood .form-group,
 #add_flood .form-group{
     margin: .4em 0;
 }
+#add_twit .form-group input[type="text"],
 #add_weblink .form-group input[type="text"],
 #update_flood .form-group input[type="text"],
 #add_flood .form-group input[type="text"]{
@@ -167,7 +169,7 @@ table{
     border-radius: .2em;
 }
  
-
+#add_twit .form-group .btn,
 #add_weblink .form-group .btn,
 #update_flood .form-group .btn,
 #add_flood .form-group .btn{
@@ -182,6 +184,7 @@ table{
     border-radius: .2em;
     margin: .5em 0em;
 }
+#add_twit .form-group .btn:hover,
 #add_weblink .form-group .btn:hover,
 #update_flood .form-group .btn:hover,
 #add_flood .form-group .btn:hover{

@@ -5,6 +5,7 @@ var path        = require('path');
 var fs=require('fs');
 var Flooddb = require('./server/model/model');
 const  weblinkmodel = require('./server/model/weblinkmodel');
+const  twitmodel = require('./server/model/twitmodel');
 var csv         = require('csvtojson');
 var bodyParser  = require('body-parser');
 const { response } = require('express');
@@ -112,35 +113,76 @@ csv()
    });
    
 });
-app.post('/api/link',  (req,res)=>{
+app.post('/api/link',uploads.single('csv2'),  (req,res)=>{
     if(!req.body){
         res.status(400).send({ message : "Content can not be emtpy!"});
         return;
-    }
+    }  
  
-    // new link
+ //convert csvfile to jsonArray   
+csv()
+.fromFile(req.file.path)
+.then((jsonObj)=>{
+    console.log(jsonObj);
     const link = new weblinkmodel({
-        weblink:req.body.weblink,
-        StartDate : req.body.StartDate,
-        EndDate: req.body.EndDate,
-       CountryName : req.body.CountryName
-        
+         
+       CountryName : req.body.CountryName,
+       
+       weblinkdata : jsonObj
        
     })
  
-    // save flood in the database
-    link.save(link)
-        .then(data => {
-            //  res.send(data)
-             res.redirect('/');
-        })
-        .catch( (error) =>{
-            res.status(500).send({
-                message : error.message || "Some error occurred while creating a create operation"
-            });
+    link.save(link).then(data => {
+        // res.send(data)
+   
+   ("./" + fs.unlinkSync(req.file.path));
+     res.redirect('/');
+    })
+    .catch( (error) =>{
+        res.status(500).send({
+            message : error.message || "Some error occurred while creating a create operation"
         });
-
+    });
+      
+   });
+   
 });
+
+app.post('/api/twit',uploads.single('csv3'),  (req,res)=>{
+    if(!req.body){
+        res.status(400).send({ message : "Content can not be emtpy!"});
+        return;
+    }  
+ 
+ //convert csvfile to jsonArray   
+csv()
+.fromFile(req.file.path)
+.then((jsonObj)=>{
+    console.log(jsonObj);
+    const twit = new twitmodel({
+         
+       CountryName : req.body.CountryName,
+       
+       twitdata : jsonObj
+       
+    })
+ 
+    twit.save(twit).then(data => {
+        // res.send(data)
+   
+   ("./" + fs.unlinkSync(req.file.path));
+     res.redirect('/');
+    })
+    .catch( (error) =>{
+        res.status(500).send({
+            message : error.message || "Some error occurred while creating a create operation"
+        });
+    });
+      
+   });
+   
+});
+ 
 app.put('/api/flood/:id',async (req, res)=>{
     if(!req.body){
         return res.status(400).send({ message : "Data to update can not be empty"})
@@ -182,6 +224,28 @@ app.put('/api/link/:id',async (req, res)=>{
                 return res.status(400).send({ message : "Data to update can not be empty"})
             }
     });  
+
+app.put('/api/twit/:id',async (req, res)=>{
+        if(!req.body){
+            return res.status(400).send({ message : "Data to update can not be empty"})
+        }
+    
+            const id = req.params.id;
+          await twitmodel.findByIdAndUpdate(id, req.body, {useFindAndModify:false}  )
+                .then(data => {
+                    if(!data){
+                        res.status(404).send({ message : `Cannot Update twit with ${id}. Maybe flood not found!`})
+                    }else{
+                        res.send(data)
+                    }
+                })
+                .catch(err =>{
+                    res.status(500).send({ message : "Error Update twit information"})
+                })
+                if(!req.body){
+                    return res.status(400).send({ message : "Data to update can not be empty"})
+                }
+        });
 //assign port
 var port = process.env.PORT || 3000;
 app.listen(port,()=>console.log('server run at port '+port));

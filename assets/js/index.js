@@ -9,6 +9,10 @@ $("#add_weblink").submit(function(event){
     alert("Data Inserted Successfully!");
 })
 
+$("#add_twit").submit(function(event){
+ 
+    alert("Data Inserted Successfully!");
+})
 
 $("#update_flood").submit(function(event){
     event.preventDefault();

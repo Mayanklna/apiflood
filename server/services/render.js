@@ -21,6 +21,9 @@ exports.add_flood = (req, res) =>{
 exports.add_weblink = (req, res) =>{
     res.render('floodlist-weblink');
 }
+exports.add_twit = (req, res) =>{
+    res.render('twitter');
+}
 exports.update_flood = (req, res) =>{
     axios.get('https://agile-hollows-34401.herokuapp.com/api/flood', { params : { id : req.query.id }})
         .then(function(response1){

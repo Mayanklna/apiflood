@@ -1,5 +1,5 @@
 var mongoose  =  require('mongoose');
-var weblinkSchema =new mongoose.Schema({
+var twitSchema =new mongoose.Schema({
     
              CountryName:{
                  type:String,
@@ -9,12 +9,12 @@ var weblinkSchema =new mongoose.Schema({
                }
               ,
 
-           weblinkdata:{
+          twitdata:{
         type: []
     },
   
 });
 
 
-const Weblinkdb=mongoose.model('floodlistweblinks',weblinkSchema);
-module.exports=Weblinkdb
+const Twitdb=mongoose.model('alltwitdata',twitSchema);
+module.exports=Twitdb
