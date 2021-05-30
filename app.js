@@ -42,9 +42,7 @@ app.use(function(req, res, next) {
     next();
   }); 
  
-app.use(bodyParser.urlencoded({
-  extended: true
-})); 
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true})); 
 //static folder
 app.use(express.static(path.resolve(__dirname,'public')));
 app.use('/css', express.static(path.resolve(__dirname, "assets/css")))
