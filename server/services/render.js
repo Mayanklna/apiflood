@@ -1,9 +1,20 @@
 const axios = require('axios');
-
-
+ 
 exports.homeRoutes = (req, res) => {
     // Make a get request to /api/floods
-    axios.get('https://agile-hollows-34401.herokuapp.com/api/flood')
+    
+           // res.send(response);
+            res.render('login' );
+        
+        
+
+    
+}
+ 
+exports.allfloods = (req, res,next) => {
+    
+        // The user is logged in
+        axios.get('https://agile-hollows-34401.herokuapp.com/api/flood')
         .then(function(response){
            // res.send(response);
             res.render('index', { floods : response.data });
@@ -11,20 +22,21 @@ exports.homeRoutes = (req, res) => {
         .catch(err =>{
             res.send(err);
         })
-
-    
-}
-
-exports.add_flood = (req, res) =>{
+      }
+   // Make a get request to /api/floods
+   
+   
+ 
+exports.add_flood = (req, res,next) =>{
     res.render('add_flood');
 }
-exports.add_weblink = (req, res) =>{
+exports.add_weblink = (req, res,next) =>{
     res.render('floodlist-weblink');
 }
-exports.add_twit = (req, res) =>{
+exports.add_twit = (req, res,next) =>{
     res.render('twitter');
 }
-exports.update_flood = (req, res) =>{
+exports.update_flood = (req, res,next) =>{
     axios.get('https://agile-hollows-34401.herokuapp.com/api/flood', { params : { id : req.query.id }})
         .then(function(response1){
             res.render("update_flood", { flood : response1.data})

@@ -3,8 +3,9 @@ const route = express.Router()
 const   model = require('../model/model');
 const  weblinkmodel = require('../model/weblinkmodel');
 const  twitmodel = require('../model/twitmodel');
+const  registerdb = require('../model/register');
 const services = require('../services/render');
-
+ 
 // const controller = require('../controller/controller');
 
 // const weblinkcontrol = require('../controller/weblinkcontrol');
@@ -13,8 +14,9 @@ const services = require('../services/render');
  *  @description Root Route
  *  @method GET /
  */
-route.get('/', services.homeRoutes);
  
+route.get('/', services.homeRoutes);
+route.get('/allfloods',  services.allfloods);
  
 /**
  *  @description add flood
@@ -32,7 +34,7 @@ route.get('/update-flood', services.update_flood)
 
 // API
 //flood
-route.get('/api/flood', (req, res) => {
+route.get('/api/flood', (req, res,next) => {
 
     if (req.query.id) {
         const id = req.query.id;
@@ -66,7 +68,7 @@ route.get('/api/flood', (req, res) => {
 
 });
 // route.put('/api/flood/:id', controller.update);
-route.delete('/api/flood/:id', (req, res) => {
+route.delete('/api/flood/:id', (req, res,next) => {
     const id = req.params.id;
 
    model.findByIdAndDelete(id)
@@ -89,7 +91,7 @@ route.delete('/api/flood/:id', (req, res) => {
 });
 //Link
  
-route.get('/api/link',(req, res) => {
+route.get('/api/link',(req, res,next) => {
 
     if (req.query.id) {
         const id = req.query.id;
@@ -122,7 +124,7 @@ route.get('/api/link',(req, res) => {
 
 });
  
-route.delete('/api/link/:id', (req, res) => {
+route.delete('/api/link/:id', (req, res,next) => {
     const id = req.params.id;
 
  
@@ -144,7 +146,7 @@ route.delete('/api/link/:id', (req, res) => {
      
 });
 //tweet
-route.get('/api/twit',(req, res) => {
+route.get('/api/twit',(req, res,next) => {
 
     if (req.query.id) {
         const id = req.query.id;
@@ -177,7 +179,7 @@ route.get('/api/twit',(req, res) => {
 
 });
  
-route.delete('/api/twit/:id', (req, res) => {
+route.delete('/api/twit/:id', (req, res,next) => {
     const id = req.params.id;
 
  

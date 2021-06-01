@@ -6,10 +6,12 @@ var fs=require('fs');
 var Flooddb = require('./server/model/model');
 const  weblinkmodel = require('./server/model/weblinkmodel');
 const  twitmodel = require('./server/model/twitmodel');
+const  registerdb = require('./server/model/register');
+ 
 var csv         = require('csvtojson');
 var bodyParser  = require('body-parser');
 const { response } = require('express');
-
+ 
 var storage = multer.diskStorage({
     destination:(req,file,cb)=>{
         cb(null,'./public/uploads');
@@ -20,7 +22,7 @@ var storage = multer.diskStorage({
 });
 //init app
 var app = express();
-var uploads = multer({storage:storage});
+var uploads = multer({storage:storage  });
 require('dotenv').config();
 //connect to db
 mongoose.connect(process.env.MONGO_URL,{useNewUrlParser:true},{ useUnifiedTopology: true })
@@ -52,7 +54,7 @@ app.use('/js', express.static(path.resolve(__dirname, "assets/js")))
  
 
 var temp ;
-app.get('/flooddata', async (req, res) => {
+app.get('/flooddata', async (req, res,next) => {
  
     try{ 
         const cases=await Flooddb.find({})
@@ -64,7 +66,7 @@ app.get('/flooddata', async (req, res) => {
           }
 });
 
-app.get('/weblinks', async (req, res) => {
+app.get('/weblinks', async (req, res,next) => {
  
     try{ 
         const links=await weblinkmodel.find({})
@@ -75,7 +77,7 @@ app.get('/weblinks', async (req, res) => {
               res.status(500).send(e)
           }
 });
-app.get('/twits', async (req, res) => {
+app.get('/twits', async (req, res,next) => {
  
     try{ 
         const twits=await twitmodel.find({})
@@ -86,7 +88,44 @@ app.get('/twits', async (req, res) => {
               res.status(500).send(e)
           }
 });
-app.post('/api/flood',uploads.single('csv'),  (req,res)=>{
+//login check
+app.post('/login',async  (req,res,next)=>{
+    if(!req.body){
+        res.status(400).send({ message : "Content can not be emtpy!"});
+        return;
+    }  
+    try{
+         const email = req.body.email;
+         const password = req.body.password;
+         console.log(email);
+         console.log(password);
+         const useremail = await registerdb.findOne({email:email})
+        
+       if(useremail.password === password){
+       
+       // res.send(response);
+        res.redirect('/allfloods');
+    
+      
+         
+       }
+       else{
+        res.status(400).send("invalid credentials");
+
+       }
+    }
+    catch(error){
+        res.status(400).send("invalid credentials");
+
+    }
+      
+   });
+    
+ 
+
+ 
+app.post('/api/flood',uploads.single('csv'),  (req,res,next)=>{
+    
     if(!req.body){
         res.status(400).send({ message : "Content can not be emtpy!"});
         return;
@@ -122,7 +161,7 @@ csv()
    });
    
 });
-app.post('/api/link',uploads.single('csv2'),  (req,res)=>{
+app.post('/api/link',uploads.single('csv2'),  (req,res,next)=>{
     if(!req.body){
         res.status(400).send({ message : "Content can not be emtpy!"});
         return;
@@ -157,7 +196,7 @@ csv()
    
 });
 
-app.post('/api/twit',uploads.single('csv3'),  (req,res)=>{
+app.post('/api/twit',uploads.single('csv3'),  (req,res,next)=>{
     if(!req.body){
         res.status(400).send({ message : "Content can not be emtpy!"});
         return;
@@ -192,7 +231,7 @@ csv()
    
 });
  
-app.put('/api/flood/:id',async (req, res)=>{
+app.put('/api/flood/:id',async (req, res,next)=>{
     if(!req.body){
         return res.status(400).send({ message : "Data to update can not be empty"})
     }
@@ -212,7 +251,7 @@ app.put('/api/flood/:id',async (req, res)=>{
            
     })
   
-app.put('/api/link/:id',async (req, res)=>{
+app.put('/api/link/:id',async (req, res,next)=>{
     if(!req.body){
         return res.status(400).send({ message : "Data to update can not be empty"})
     }
@@ -234,7 +273,7 @@ app.put('/api/link/:id',async (req, res)=>{
             }
     });  
 
-app.put('/api/twit/:id',async (req, res)=>{
+app.put('/api/twit/:id',async (req, res,next)=>{
         if(!req.body){
             return res.status(400).send({ message : "Data to update can not be empty"})
         }
