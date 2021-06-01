@@ -150,7 +150,7 @@ csv()
         // res.send(data)
    
    ("./" + fs.unlinkSync(req.file.path));
-     res.redirect('/');
+     res.redirect('/allfloods');
     })
     .catch( (error) =>{
         res.status(500).send({
@@ -184,7 +184,7 @@ csv()
         // res.send(data)
    
    ("./" + fs.unlinkSync(req.file.path));
-     res.redirect('/');
+     res.redirect('/allfloods');
     })
     .catch( (error) =>{
         res.status(500).send({
@@ -219,7 +219,7 @@ csv()
         // res.send(data)
    
    ("./" + fs.unlinkSync(req.file.path));
-     res.redirect('/');
+     res.redirect('/allfloods');
     })
     .catch( (error) =>{
         res.status(500).send({
