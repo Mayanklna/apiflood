@@ -6,11 +6,14 @@ var fs = require('fs');
 var Flooddb = require('./server/model/model');
 const weblinkmodel = require('./server/model/weblinkmodel');
 const twitmodel = require('./server/model/twitmodel');
-const registerdb = require('./server/model/register');
+const cookieParser = require("cookie-parser")
+//MONGO_URL=mongodb+srv://manav:manav123@cluster0.aaovc.mongodb.net/Floodsatsearch?retryWrites=true&w=majority
 
+const jwt=require("jsonwebtoken");
 var csv = require('csvtojson');
 var bodyParser = require('body-parser');
 const { response } = require('express');
+const Registerdb = require('./server/model/register');
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -29,13 +32,15 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true }, { useUnifiedT
     .then(() => console.log('connected to db'))
     .catch((err) => console.log(err))
 
-
+console.log(process.env.SECRET_KEY);
 
 //set the template engine
 app.set('view engine', 'ejs');
 app.use('/', require('./server/routes/router'))
+
 //fetch data from the request
 app.use(bodyParser.json({ limit: '50mb', extended: true }))
+app.use(cookieParser());
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", '*');
     res.header("Access-Control-Allow-Credentials", true);
@@ -50,10 +55,25 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 app.use('/css', express.static(path.resolve(__dirname, "assets/css")))
 app.use('/img', express.static(path.resolve(__dirname, "assets/img")))
 app.use('/js', express.static(path.resolve(__dirname, "assets/js")))
+
+
+
 //default pageload
 
 
+
 var temp;
+app.get('/login',async (req, res, next) => {
+
+    try {
+        
+        res.render("login")
+
+    }
+    catch (e) {
+        res.status(500).send(e)
+    }
+})
 app.get('/flooddata', async (req, res, next) => {
 
     try {
@@ -88,7 +108,53 @@ app.get('/twits', async (req, res, next) => {
         res.status(500).send(e)
     }
 });
+
+
 //login check
+
+app.post('/register',async(req,res)=>{
+    try {
+        
+        const password = req.body.password;
+        const cpassword= req.body.confirmpassword;
+        console.log(password, cpassword)
+        const data = {
+            username : req.body.username,
+            email : req.body.email,
+            password : req.body.password
+          
+        }
+        if(password === cpassword){
+            console.log("im here ")
+            
+
+            const registeruser =new  Registerdb({
+                username : req.body.username,
+                email : req.body.email,
+                password : req.body.password
+            })
+
+            const token = await registeruser.generateAuthToken();
+            res.cookie("jwt",token, {
+                expires:new Date(Date.now() +(24*60*60*1000*2)),
+                httpOnly:true
+            });
+            const registered = await registeruser.save();
+            res.status(201).render("login");
+
+        }else{
+            res.send("password are not matching");
+        }
+        
+    }
+    catch (error) {
+        res.status(400).send(error);
+
+    }
+})
+
+
+
 app.post('/login', async (req, res, next) => {
     if (!req.body) {
         res.status(400).send({ message: "Content can not be emtpy!" });
@@ -99,8 +165,15 @@ app.post('/login', async (req, res, next) => {
         const password = req.body.password;
         console.log(email);
         console.log(password);
-        const useremail = await registerdb.findOne({ email: email })
+        const useremail = await Registerdb.findOne({ email: email })
+        const token = await useremail.generateAuthToken();
 
+        res.cookie("jwt",token, {
+            expires:new Date(Date.now() +(24*60*60*1000*2)),
+            httpOnly:true,
+            // secure:true
+        });
+        console.log("cookie",res.cookie )
         if (useremail.password === password) {
 
             // res.send(response);
@@ -122,7 +195,17 @@ app.post('/login', async (req, res, next) => {
 });
 
 
-
+app.get('/logout', async(req,res)=>{
+    try{
+        res.clearCookie("jwt");
+        console.log("logout successfully");
+        await req.user.save();
+        res.render("login");
+    } catch{
+        res.status(500).send(error);
+    }
+    
+})
 
 app.post('/api/flood', uploads.single('csv'), (req, res, next) => {
 

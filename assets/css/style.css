@@ -191,3 +191,8 @@ table{
     background-color: var(--dark);
     color: var(--border);
 }
+
+
+.alogout{
+    margin-left: 80%;
+}

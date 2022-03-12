@@ -4,12 +4,8 @@
 
     <!-- Main Site -->
     <main id="site-main">
-        <div class="container">
-            <div class="box-nav d-flex justify-between">
-                <div class="filter">
-                    <a href="/allfloods"><i class="fas fa-angle-double-left"></i> All Floods</a>
-                </div>
-            </div>
+        
+            
             <div class="form-title text-center">
                 <h2 class="text-dark">Update Flood</h2>
                 <span class="text-light">Use the below form to Update a Flood</span>
@@ -42,11 +38,18 @@
                         <label for="country" class="text-light">Country</label><br>
 
                         <select id="countries" name="CountryName"  >
+                            <option value="Bangladesh"  <%= flood.CountryName == 'Bangladesh' ? 'selected' : ''%>>Bangladesh</option>
+                            <option value="Cambodia"  <%= flood.CountryName == 'Cambodia' ? 'selected' : ''%>>Cambodia</option>
                             <option value="India"  <%= flood.CountryName == 'India' ? 'selected' : ''%>>India</option>
                             <option value="Indonesia"  <%= flood.CountryName == 'Indonesia' ? 'selected' : ''%>>Indonesia</option>
                             <option value="Japan"  <%= flood.CountryName == 'Japan' ? 'selected' : ''%>>Japan</option>
                             <option value="Laos"  <%= flood.CountryName == 'Laos' ? 'selected' : ''%>>Laos</option>
                             <option value="Thailand"  <%= flood.CountryName == 'Thailand' ? 'selected' : ''%>>Thailand</option>
+                            <option value="Malaysia"  <%= flood.CountryName == 'Malaysia' ? 'selected' : ''%>>Malaysia</option>
+                            <option value="Myanmar"  <%= flood.CountryName == 'Myanmar' ? 'selected' : ''%>>Myanmar</option>
+                            <option value="Philippines"  <%= flood.CountryName == 'Philippines' ? 'selected' : ''%>>Philippines</option>
+                            <option value="Srilanka"  <%= flood.CountryName == 'Srilanka' ? 'selected' : ''%>>Srilanka</option>
+                            <option value="Vietnam"  <%= flood.CountryName == 'Vietnam' ? 'selected' : ''%>>Vietnam</option>
                         </select>
 
                     </div>

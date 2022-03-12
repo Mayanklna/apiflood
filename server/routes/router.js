@@ -5,7 +5,9 @@ const  weblinkmodel = require('../model/weblinkmodel');
 const  twitmodel = require('../model/twitmodel');
 const  registerdb = require('../model/register');
 const services = require('../services/render');
- 
+ const cookieParser =require("cookie-parser")
+ const axios = require('axios');
+ const auth = require("../middileware/auth")
 // const controller = require('../controller/controller');
 
 // const weblinkcontrol = require('../controller/weblinkcontrol');
@@ -16,7 +18,16 @@ const services = require('../services/render');
  */
  
 route.get('/', services.homeRoutes);
-route.get('/allfloods',  services.allfloods);
+route.get('/allfloods',auth, (req,res) =>{
+    axios.get('https://agile-hollows-34401.herokuapp.com/api/flood')
+    .then(function(response){
+       // res.send(response);
+        res.render('index', { floods : response.data });
+    })
+    .catch(err =>{
+        res.send(err);
+    })
+});
  
 /**
  *  @description add flood

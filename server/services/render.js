@@ -4,25 +4,15 @@ exports.homeRoutes = (req, res) => {
     // Make a get request to /api/floods
     
            // res.send(response);
-            res.render('login' );
+            res.render('register' );
         
         
 
     
 }
+
  
-exports.allfloods = (req, res ) => {
-    
-        // The user is logged in
-        axios.get('https://agile-hollows-34401.herokuapp.com/api/flood')
-        .then(function(response){
-           // res.send(response);
-            res.render('index', { floods : response.data });
-        })
-        .catch(err =>{
-            res.send(err);
-        })
-      }
+
    // Make a get request to /api/floods
    
    

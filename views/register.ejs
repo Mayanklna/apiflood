@@ -39,7 +39,6 @@
                     <div class="text-center">
                         <font color="white" ><h2> Flood Explorer Database Management </h2> </font> 
                     </div>
-                   
                 </div>
             </nav>
         </header>
@@ -49,9 +48,12 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <div class="simple-login-container">
-    <h2>Login Form</h2>
-    <form action="/login" method ="POST"> 
+    <h2>Register Form</h2>
+    <form action="/register" method ="POST"> 
     <div class="row">
+        <div class="col-md-12 form-group">
+            <input type="text" class="form-control" placeholder="username" required name="username">
+        </div>
         <div class="col-md-12 form-group">
             <input type="text" class="form-control" placeholder="Email" required name="email">
         </div>
@@ -61,12 +63,16 @@
             <input type="password" placeholder="Password" required name="password" class="form-control">
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <input type="password" placeholder="confirm Password" required name="confirmpassword" class="form-control">
+        </div>
+    </div>
     <div class="row"> 
         <div class="col-md-12 form-group"> 
-    <button class="btn btn-block btn-login" type="submit">Login</button></div></div>
+    <button class="btn btn-block btn-login" type="submit">Register</button></div></div>
     
 </form>
-<a href="/register">Register</a>
 </div>
 
 <!-- include footer -->
