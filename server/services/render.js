@@ -4,7 +4,7 @@ exports.homeRoutes = (req, res) => {
     // Make a get request to /api/floods
     
            // res.send(response);
-            res.render('register' );
+            res.render('login' );
         
         
 
