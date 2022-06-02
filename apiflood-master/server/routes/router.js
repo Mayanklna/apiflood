@@ -33,14 +33,14 @@ route.get('/allfloods',auth, (req,res) =>{
  *  @description add flood
  *  @method GET /add-flood
  */
-route.get('/add-flood', services.add_flood)
-route.get('/floodlist-weblink', services.add_weblink)
-route.get('/twitter', services.add_twit)
+route.get('/add-flood',auth, services.add_flood)
+route.get('/floodlist-weblink',auth, services.add_weblink)
+route.get('/twitter',auth, services.add_twit)
 /**
  *  @description for update flood
  *  @method GET /update-flood
  */
-route.get('/update-flood', services.update_flood)
+route.get('/update-flood',auth, services.update_flood)
 
 
 // API
@@ -102,7 +102,7 @@ route.delete('/api/flood/:id', (req, res ) => {
 });
 //Link
  
-route.get('/api/link',(req, res ) => {
+route.get('/api/link',auth,(req, res ) => {
 
     if (req.query.id) {
         const id = req.query.id;
@@ -135,7 +135,7 @@ route.get('/api/link',(req, res ) => {
 
 });
  
-route.delete('/api/link/:id', (req, res ) => {
+route.delete('/api/link/:id',auth, (req, res ) => {
     const id = req.params.id;
 
  
@@ -157,7 +157,7 @@ route.delete('/api/link/:id', (req, res ) => {
      
 });
 //tweet
-route.get('/api/twit',(req, res ) => {
+route.get('/api/twit',auth,(req, res ) => {
 
     if (req.query.id) {
         const id = req.query.id;
@@ -190,7 +190,7 @@ route.get('/api/twit',(req, res ) => {
 
 });
  
-route.delete('/api/twit/:id', (req, res ) => {
+route.delete('/api/twit/:id',auth, (req, res ) => {
     const id = req.params.id;
 
  
